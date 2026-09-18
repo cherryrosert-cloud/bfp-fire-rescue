@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BFP Fire Rescue</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#111827;
+ color:white;
+ text-align:center;
+}
+.game{
+ max-width:520px;
+ margin:auto;
+ padding:12px;
+}
+.header{
+ background:#1f2937;
+ padding:15px;
+ border-radius:18px;
+ margin-bottom:10px;
+}
+h1{margin:0;font-size:24px}
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:6px;
+ margin-top:12px;
+}
+.stat{
+ background:#111827;
+ padding:8px 3px;
+ border-radius:10px;
+ font-size:12px;
+}
+.stat b{
+ display:block;
+ font-size:18px;
+ margin-top:3px;
+}
+.scene{
+ position:relative;
+ height:390px;
+ overflow:hidden;
+ border-radius:20px;
+ background:
+ linear-gradient(#7dd3fc 0 55%,#65a30d 55% 65%,#4b5563 65%);
+ border:3px solid #374151;
+}
+.cloud{
+ position:absolute;
+ font-size:35px;
+ opacity:.8;
+}
+.cloud1{left:8%;top:25px}
+.cloud2{right:10%;top:60px}
+
+.building{
+ position:absolute;
+ right:7%;
+ bottom:80px;
+ width:55%;
+ height:250px;
+ background:#d6d3d1;
+ border:6px solid #292524;
+}
+.roof{
+ position:absolute;
+ top:-45px;
+ left:-15px;
+ width:calc(100% + 30px);
+ height:50px;
+ background:#7c2d12;
+ clip-path:polygon(50% 0,100% 100%,0 100%);
+}
+.floor{
+ height:50%;
+ display:flex;
+ align-items:center;
+ justify-content:space-around;
+}
+.window{
+ width:48px;
+ height:48px;
+ background:#fef08a;
+ border:4px solid #292524;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:23px;
+}
+.fire{
+ position:absolute;
+ font-size:45px;
+ z-index:4;
+ animation:fire 0.35s infinite alternate;
+}
+.f1{right:28%;top:110px}
+.f2{right:10%;top:190px}
+.f3{right:40%;top:235px}
+
+@keyframes fire{
+ to{transform:scale(1.2) rotate(5deg)}
+}
+
+.road{
+ position:absolute;
+ bottom:25px;
+ left:0;
+ right:0;
+ border-top:5px dashed white;
+}
+
+.truck{
+ position:absolute;
+ left:4%;
+ bottom:36px;
+ font-size:68px;
+ transition:left 1s ease;
+ z-index:6;
+}
+
+.firefighter{
+ position:absolute;
+ left:15%;
+ bottom:75px;
+ font-size:48px;
+ display:none;
+ transition:left 1s ease;
+ z-index:7;
+}
+
+.water{
+ position:absolute;
+ left:44%;
+ bottom:112px;
+ width:0;
+ height:8px;
+ background:#38bdf8;
+ border-radius:10px;
+ opacity:0;
+ z-index:8;
+}
+.water.active{
+ width:48%;
+ opacity:1;
+ transition:.5s;
+}
+
+.message{
+ background:#1f2937;
+ padding:13px;
+ margin:10px 0;
+ border-radius:14px;
+ min-height:50px;
+ font-size:14px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+}
+
+.barlabel{
+ font-size:11px;
+ text-align:left;
+ margin-top:6px;
+}
+.bar{
+ height:10px;
+ background:#374151;
+ border-radius:10px;
+ overflow:hidden;
+}
+.fill{
+ height:100%;
+ transition:.25s;
+}
+.firebar{background:#ef4444}
+.waterbar{background:#38bdf8}
+
+.buttons{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:9px;
+ margin-top:12px;
+}
+
+button{
+ min-height:55px;
+ border:0;
+ border-radius:14px;
+ font-size:14px;
+ font-weight:bold;
+ background:#f3f4f6;
+ color:#111827;
+}
+button:active{
+ transform:scale(.96);
+}
+button:disabled{
+ opacity:.4;
+}
+.primary{
+ background:#fbbf24;
+}
+
+.overlay{
+ position:absolute;
+ inset:0;
+ background:rgba(0,0,0,.82);
+ display:none;
+ align-items:center;
+ justify-content:center;
+ z-index:20;
+}
+.result{
+ background:white;
+ color:#111827;
+ padding:25px;
+ border-radius:20px;
+ width:85%;
+}
+.result h2{margin-top:0}
+.result button{
+ width:100%;
+ margin-top:15px;
+ background:#fbbf24;
+}
+
+.reset{
+ width:100%;
+ margin-top:9px;
+ background:#374151;
+ color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="game">
+
+<div class="header">
+<h1>🚒 BFP FIRE RESCUE</h1>
+<div style="font-size:12px;margin-top:4px">
+LEVEL 1 • RESIDENTIAL FIRE
+</div>
+
+<div class="stats">
+<div class="stat">⏱️<b id="time">90</b>SEC</div>
+<div class="stat">⭐<b id="score">0</b></div>
+<div class="stat">🛟<b id="saved">0/3</b></div>
+<div class="stat">❤️<b id="hp">100</b>%</div>
+</div>
+</div>
+
+<div class="scene">
+
+<div class="cloud cloud1">☁️</div>
+<div class="cloud cloud2">☁️</div>
+
+<div class="building">
+<div class="roof"></div>
+
+<div class="floor">
+<div class="window">🔥</div>
+<div class="window">👤</div>
+<div class="window">🏠</div>
+</div>
+
+<div class="floor">
+<div class="window">👤</div>
+<div class="window">🔥</div>
+<div class="window">👤</div>
+</div>
+
+</div>
+
+<div class="fire f1">🔥</div>
+<div class="fire f2">🔥</div>
+<div class="fire f3">🔥</div>
+
+<div class="road"></div>
+
+<div id="truck" class="truck">🚒</div>
+<div id="fighter" class="firefighter">👨‍🚒</div>
+<div id="water" class="water"></div>
+
+<div id="overlay" class="overlay">
+<div class="result">
+<h2 id="resultTitle">MISSION COMPLETE</h2>
+<div id="resultText"></div>
+<button id="again">🔄 PLAY AGAIN</button>
+</div>
+</div>
+
+</div>
+
+<div class="barlabel">
+🔥 FIRE INTENSITY — <span id="fireNum">100</span>%
+</div>
+<div class="bar">
+<div id="fireFill" class="fill firebar" style="width:100%"></div>
+</div>
+
+<div class="barlabel">
+💧 WATER — <span id="waterNum">100</span>%
+</div>
+<div class="bar">
+<div id="waterFill" class="fill waterbar" style="width:100%"></div>
+</div>
+
+<div id="message" class="message">
+📟 Emergency call received! Tap RESPOND.
+</div>
+
+<div class="buttons">
+
+<button id="respond" class="primary">
+🚒 RESPOND
+</button>
+
+<button id="alarm" disabled>
+📢 SOUND ALARM
+</button>
+
+<button id="hose" disabled>
+💦 ATTACK FIRE
+</button>
+
+<button id="rescue" disabled>
+🛟 RESCUE
+</button>
+
+<button id="ladder" disabled>
+🪜 LADDER RESCUE
+</button>
+
+<button id="reset">
+🔄 RESET
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let time=90;
+let score=0;
+let saved=0;
+let hp=100;
+let water=100;
+let fire=100;
+
+let started=false;
+let ended=false;
+let timer;
+
+const $=id=>document.getElementById(id);
+
+function update(){
+
+ $("time").textContent=time;
+ $("score").textContent=score;
+ $("saved").textContent=saved+"/3";
+ $("hp").textContent=hp;
+
+ $("fireNum").textContent=fire;
+ $("waterNum").textContent=water;
+
+ $("fireFill").style.width=fire+"%";
+ $("waterFill").style.width=water+"%";
+}
+
+function message(text){
+ $("message").innerHTML=text;
+}
+
+function enableActions(value){
+
+ $("alarm").disabled=!value;
+ $("hose").disabled=!value;
+ $("rescue").disabled=!value;
+ $("ladder").disabled=!value;
+
+}
+
+function finish(success,text){
+
+ ended=true;
+ clearInterval(timer);
+
+ enableActions(false);
+ $("respond").disabled=true;
+
+ $("resultTitle").textContent=
+ success ? "🏆 MISSION COMPLETE" : "🚨 MISSION FAILED";
+
+ $("resultText").innerHTML=
+ text+
+ "<br><br><b>Final Score: "+score+"</b>";
+
+ $("overlay").style.display="flex";
+}
+
+function checkMission(){
+
+ if(saved===3 && fire<=15){
+
+ finish(
+ true,
+ "All civilians are safe and the fire is under control!"
+ );
+
+ }
+
+ if(hp<=0){
+
+ finish(
+ false,
+ "The firefighter can no longer safely continue."
+ );
+
+ }
+
+}
+
+function respond(){
+
+ if(started)return;
+
+ started=true;
+
+ $("respond").disabled=true;
+ enableActions(true);
+
+ score+=50;
+
+ message(
+ "🚒 Unit responding! Fire truck is moving to the incident..."
+ );
+
+ $("truck").style.left="42%";
+
+ setTimeout(()=>{
+
+ if(ended)return;
+
+ $("fighter").style.display="block";
+ $("fighter").style.left="48%";
+
+ message(
+ "📍 Arrived on scene! Choose your operation."
+ );
+
+ },1000);
+
+ update();
+}
+
+function alarm(){
+
+ if(ended)return;
+
+ score+=25;
+
+ message(
+ "📢 Alarm activated! Occupants are being alerted."
+ );
+
+ update();
+}
+
+function hose(){
+
+ if(ended)return;
+
+ if(water<15){
+
+ message("💧 Water supply is too low!");
+
+ return;
+ }
+
+ water-=15;
+
+ fire=Math.max(0,fire-22);
+
+ score+=80;
+
+ $("water").classList.add("active");
+
+ setTimeout(()=>{
+ $("water").classList.remove("active");
+ },700);
+
+ message(
+ "💦 <b>Attack line deployed!</b> Fire intensity reduced."
+ );
+
+ update();
+
+ checkMission();
+}
+
+function rescue(){
+
+ if(ended)return;
+
+ if(saved>=3)return;
+
+ if(fire>75){
+
+ message(
+ "🔥 Fire is too intense! Reduce the fire first."
+ );
+
+ return;
+ }
+
+ saved++;
+
+ score+=150;
+
+ hp=Math.max(0,hp-5);
+
+ message(
+ "🛟 <b>Civilian rescued!</b> "+
+ saved+" of 3 civilians are safe."
+ );
+
+ $("fighter").style.left=(60+saved*8)+"%";
+
+ update();
+
+ checkMission();
+}
+
+function ladder(){
+
+ if(ended)return;
+
+ if(saved>=3)return;
+
+ if(water<10){
+
+ message("💧 Not enough water.");
+
+ return;
+ }
+
+ water-=10;
+
+ fire=Math.max(0,fire-12);
+
+ saved++;
+
+ score+=180;
+
+ hp=Math.max(0,hp-2);
+
+ message(
+ "🪜 <b>Ladder rescue successful!</b>"
+ );
+
+ $("fighter").style.left=(60+saved*8)+"%";
+
+ update();
+
+ checkMission();
+}
+
+function tick(){
+
+ if(!started || ended)return;
+
+ time--;
+
+ if(time%5===0){
+
+ fire=Math.min(100,fire+4);
+
+ if(fire>85){
+
+ hp=Math.max(0,hp-2);
+
+ }
+
+ }
+
+ update();
+
+ if(time<=0){
+
+ finish(
+ false,
+ "Time ran out! The mission objectives were not completed."
+ );
+
+ }
+
+}
+
+function resetGame(){
+
+ clearInterval(timer);
+
+ time=90;
+ score=0;
+ saved=0;
+ hp=100;
+ water=100;
+ fire=100;
+
+ started=false;
+ ended=false;
+
+ $("respond").disabled=false;
+
+ enableActions(false);
+
+ $("overlay").style.display="none";
+
+ $("truck").style.left="4%";
+
+ $("fighter").style.display="none";
+ $("fighter").style.left="15%";
+
+ message(
+ "📟 Emergency call received! Tap RESPOND."
+ );
+
+ update();
+}
+
+$("respond").onclick=respond;
+$("alarm").onclick=alarm;
+$("hose").onclick=hose;
+$("rescue").onclick=rescue;
+$("ladder").onclick=ladder;
+$("reset").onclick=resetGame;
+$("again").onclick=resetGame;
+
+update();
+
+timer=setInterval(tick,1000);
+
+</script>
+
+</body>
+</html>
