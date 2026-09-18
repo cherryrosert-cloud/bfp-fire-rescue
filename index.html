@@ -2,653 +2,877 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>BFP Fire Rescue</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>BFP Fire Safety Adventure</title>
 
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#111827;
- color:white;
- text-align:center;
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
-.game{
- max-width:520px;
- margin:auto;
- padding:12px;
-}
-.header{
- background:#1f2937;
- padding:15px;
- border-radius:18px;
- margin-bottom:10px;
-}
-h1{margin:0;font-size:24px}
-.stats{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:6px;
- margin-top:12px;
-}
-.stat{
- background:#111827;
- padding:8px 3px;
- border-radius:10px;
- font-size:12px;
-}
-.stat b{
- display:block;
- font-size:18px;
- margin-top:3px;
-}
-.scene{
- position:relative;
- height:390px;
- overflow:hidden;
- border-radius:20px;
- background:
- linear-gradient(#7dd3fc 0 55%,#65a30d 55% 65%,#4b5563 65%);
- border:3px solid #374151;
-}
-.cloud{
- position:absolute;
- font-size:35px;
- opacity:.8;
-}
-.cloud1{left:8%;top:25px}
-.cloud2{right:10%;top:60px}
 
-.building{
- position:absolute;
- right:7%;
- bottom:80px;
- width:55%;
- height:250px;
- background:#d6d3d1;
- border:6px solid #292524;
+body{
+margin:0;
+background:#0f172a;
+color:#fff;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
 }
+
+.app{
+max-width:560px;
+margin:auto;
+padding:12px;
+}
+
+.card{
+background:#1e293b;
+border:1px solid #334155;
+border-radius:20px;
+padding:14px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+}
+
+.logo{
+font-size:20px;
+font-weight:900;
+}
+
+.small{
+font-size:12px;
+color:#cbd5e1;
+}
+
+.progress{
+height:8px;
+background:#334155;
+border-radius:8px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress div{
+height:100%;
+background:#fbbf24;
+width:0;
+transition:.3s;
+}
+
+.scene{
+position:relative;
+height:330px;
+border-radius:18px;
+overflow:hidden;
+margin-top:10px;
+background:linear-gradient(
+#93c5fd 0 55%,
+#84cc16 55% 66%,
+#475569 66%
+);
+}
+
+.sun{
+position:absolute;
+right:28px;
+top:25px;
+font-size:42px;
+}
+
+.house{
+position:absolute;
+left:12%;
+bottom:48px;
+width:76%;
+height:220px;
+background:#e2e8f0;
+border:6px solid #334155;
+}
+
 .roof{
- position:absolute;
- top:-45px;
- left:-15px;
- width:calc(100% + 30px);
- height:50px;
- background:#7c2d12;
- clip-path:polygon(50% 0,100% 100%,0 100%);
+position:absolute;
+left:-12px;
+top:-48px;
+width:calc(100% + 24px);
+height:55px;
+background:#b91c1c;
+clip-path:polygon(50% 0,100% 100%,0 100%);
 }
-.floor{
- height:50%;
- display:flex;
- align-items:center;
- justify-content:space-around;
-}
+
 .window{
- width:48px;
- height:48px;
- background:#fef08a;
- border:4px solid #292524;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:23px;
+position:absolute;
+width:55px;
+height:55px;
+background:#fde68a;
+border:5px solid #334155;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:25px;
 }
+
+.w1{
+left:12%;
+top:27%;
+}
+
+.w2{
+right:12%;
+top:27%;
+}
+
+.w3{
+left:12%;
+bottom:12%;
+}
+
+.w4{
+right:12%;
+bottom:12%;
+}
+
+.door{
+position:absolute;
+left:43%;
+bottom:0;
+width:65px;
+height:105px;
+background:#7c2d12;
+border:5px solid #334155;
+display:flex;
+align-items:flex-start;
+justify-content:center;
+padding-top:8px;
+}
+
+.smoke{
+position:absolute;
+font-size:40px;
+opacity:.65;
+animation:smoke 1s infinite alternate;
+}
+
+.s1{
+left:37%;
+top:42px;
+}
+
+.s2{
+left:50%;
+top:25px;
+}
+
+.s3{
+left:59%;
+top:52px;
+}
+
 .fire{
- position:absolute;
- font-size:45px;
- z-index:4;
- animation:fire 0.35s infinite alternate;
+position:absolute;
+font-size:48px;
+animation:fire .35s infinite alternate;
 }
-.f1{right:28%;top:110px}
-.f2{right:10%;top:190px}
-.f3{right:40%;top:235px}
+
+.f1{
+left:19%;
+top:115px;
+}
+
+.f2{
+right:19%;
+top:145px;
+}
+
+.hero{
+position:absolute;
+bottom:28px;
+left:7%;
+font-size:48px;
+transition:.7s;
+}
 
 @keyframes fire{
- to{transform:scale(1.2) rotate(5deg)}
+to{
+transform:scale(1.18) rotate(4deg);
+}
 }
 
-.road{
- position:absolute;
- bottom:25px;
- left:0;
- right:0;
- border-top:5px dashed white;
+@keyframes smoke{
+to{
+transform:translateY(-12px);
+}
 }
 
-.truck{
- position:absolute;
- left:4%;
- bottom:36px;
- font-size:68px;
- transition:left 1s ease;
- z-index:6;
+.sceneText{
+position:absolute;
+left:10px;
+top:10px;
+background:#0f172dcc;
+border-radius:12px;
+padding:8px 10px;
+font-size:12px;
+font-weight:800;
+z-index:2;
 }
 
-.firefighter{
- position:absolute;
- left:15%;
- bottom:75px;
- font-size:48px;
- display:none;
- transition:left 1s ease;
- z-index:7;
+.question{
+margin-top:10px;
+font-size:17px;
+font-weight:800;
+line-height:1.3;
 }
 
-.water{
- position:absolute;
- left:44%;
- bottom:112px;
- width:0;
- height:8px;
- background:#38bdf8;
- border-radius:10px;
- opacity:0;
- z-index:8;
-}
-.water.active{
- width:48%;
- opacity:1;
- transition:.5s;
-}
-
-.message{
- background:#1f2937;
- padding:13px;
- margin:10px 0;
- border-radius:14px;
- min-height:50px;
- font-size:14px;
- display:flex;
- align-items:center;
- justify-content:center;
-}
-
-.barlabel{
- font-size:11px;
- text-align:left;
- margin-top:6px;
-}
-.bar{
- height:10px;
- background:#374151;
- border-radius:10px;
- overflow:hidden;
-}
-.fill{
- height:100%;
- transition:.25s;
-}
-.firebar{background:#ef4444}
-.waterbar{background:#38bdf8}
-
-.buttons{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:9px;
- margin-top:12px;
+.options{
+display:grid;
+gap:9px;
+margin-top:12px;
 }
 
 button{
- min-height:55px;
- border:0;
- border-radius:14px;
- font-size:14px;
- font-weight:bold;
- background:#f3f4f6;
- color:#111827;
+min-height:54px;
+border:0;
+border-radius:14px;
+padding:10px 12px;
+font-weight:800;
+font-size:14px;
+background:#f8fafc;
+color:#0f172a;
 }
+
 button:active{
- transform:scale(.96);
+transform:scale(.98);
 }
+
 button:disabled{
- opacity:.4;
+opacity:.45;
 }
+
 .primary{
- background:#fbbf24;
+background:#fbbf24;
+}
+
+.safe{
+background:#86efac;
+}
+
+.wrong{
+background:#fecaca;
+}
+
+.feedback{
+margin-top:10px;
+padding:12px;
+border-radius:14px;
+background:#0f172a;
+line-height:1.4;
+font-size:14px;
+}
+
+.next{
+margin-top:10px;
+width:100%;
+display:none;
+}
+
+.badges{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.badge{
+background:#334155;
+border-radius:20px;
+padding:6px 9px;
+font-size:12px;
 }
 
 .overlay{
- position:absolute;
- inset:0;
- background:rgba(0,0,0,.82);
- display:none;
- align-items:center;
- justify-content:center;
- z-index:20;
-}
-.result{
- background:white;
- color:#111827;
- padding:25px;
- border-radius:20px;
- width:85%;
-}
-.result h2{margin-top:0}
-.result button{
- width:100%;
- margin-top:15px;
- background:#fbbf24;
+position:absolute;
+inset:0;
+background:#0f172aef;
+display:none;
+align-items:center;
+justify-content:center;
+padding:22px;
+text-align:center;
+z-index:5;
 }
 
-.reset{
- width:100%;
- margin-top:9px;
- background:#374151;
- color:white;
+.overlayBox{
+background:#f8fafc;
+color:#0f172a;
+border-radius:20px;
+padding:24px;
+width:92%;
+}
+
+.overlayBox button{
+width:100%;
+margin-top:12px;
+background:#fbbf24;
+}
+
+@media(max-width:360px){
+
+.scene{
+height:300px;
+}
+
+.house{
+height:195px;
+}
+
+.question{
+font-size:16px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<div class="game">
+<div class="app">
 
-<div class="header">
-<h1>🚒 BFP FIRE RESCUE</h1>
-<div style="font-size:12px;margin-top:4px">
-LEVEL 1 • RESIDENTIAL FIRE
+<div class="card">
+
+<div class="top">
+
+<div>
+
+<div class="logo">
+🚒 BFP FIRE SAFETY ADVENTURE
 </div>
 
-<div class="stats">
-<div class="stat">⏱️<b id="time">90</b>SEC</div>
-<div class="stat">⭐<b id="score">0</b></div>
-<div class="stat">🛟<b id="saved">0/3</b></div>
-<div class="stat">❤️<b id="hp">100</b>%</div>
-</div>
+<div class="small" id="stage">
+Mission 1 of 6
 </div>
 
-<div class="scene">
+</div>
 
-<div class="cloud cloud1">☁️</div>
-<div class="cloud cloud2">☁️</div>
+<div>
+⭐ <b id="score">0</b>
+</div>
 
-<div class="building">
+</div>
+
+<div class="progress">
+<div id="prog"></div>
+</div>
+
+</div>
+
+
+<div class="scene" id="scene">
+
+<div class="sun">
+☀️
+</div>
+
+<div class="sceneText" id="sceneText">
+FIRE SAFETY: MAKE THE SAFE CHOICE
+</div>
+
+
+<div class="house">
+
 <div class="roof"></div>
 
-<div class="floor">
-<div class="window">🔥</div>
-<div class="window">👤</div>
-<div class="window">🏠</div>
+<div class="window w1">
+🔥
 </div>
 
-<div class="floor">
-<div class="window">👤</div>
-<div class="window">🔥</div>
-<div class="window">👤</div>
+<div class="window w2">
+👤
 </div>
 
+<div class="window w3">
+👤
 </div>
 
-<div class="fire f1">🔥</div>
-<div class="fire f2">🔥</div>
-<div class="fire f3">🔥</div>
-
-<div class="road"></div>
-
-<div id="truck" class="truck">🚒</div>
-<div id="fighter" class="firefighter">👨‍🚒</div>
-<div id="water" class="water"></div>
-
-<div id="overlay" class="overlay">
-<div class="result">
-<h2 id="resultTitle">MISSION COMPLETE</h2>
-<div id="resultText"></div>
-<button id="again">🔄 PLAY AGAIN</button>
+<div class="window w4">
+🔥
 </div>
+
+<div class="door">
+🚪
 </div>
 
 </div>
 
-<div class="barlabel">
-🔥 FIRE INTENSITY — <span id="fireNum">100</span>%
-</div>
-<div class="bar">
-<div id="fireFill" class="fill firebar" style="width:100%"></div>
+
+<div class="smoke s1">
+💨
 </div>
 
-<div class="barlabel">
-💧 WATER — <span id="waterNum">100</span>%
-</div>
-<div class="bar">
-<div id="waterFill" class="fill waterbar" style="width:100%"></div>
+<div class="smoke s2">
+💨
 </div>
 
-<div id="message" class="message">
-📟 Emergency call received! Tap RESPOND.
+<div class="smoke s3">
+💨
 </div>
 
-<div class="buttons">
 
-<button id="respond" class="primary">
-🚒 RESPOND
-</button>
+<div class="fire f1">
+🔥
+</div>
 
-<button id="alarm" disabled>
-📢 SOUND ALARM
-</button>
+<div class="fire f2">
+🔥
+</div>
 
-<button id="hose" disabled>
-💦 ATTACK FIRE
-</button>
 
-<button id="rescue" disabled>
-🛟 RESCUE
-</button>
+<div class="hero" id="hero">
+🧒
+</div>
 
-<button id="ladder" disabled>
-🪜 LADDER RESCUE
-</button>
 
-<button id="reset">
-🔄 RESET
+<div class="overlay" id="overlay">
+
+<div class="overlayBox">
+
+<h2 id="ovTitle">
+🏆
+</h2>
+
+<p id="ovText" style="margin-top:8px">
+</p>
+
+<button id="ovBtn">
+CONTINUE
 </button>
 
 </div>
 
 </div>
+
+</div>
+
+
+<div class="card">
+
+<div class="question" id="question">
+</div>
+
+<div class="options" id="options">
+</div>
+
+<div class="feedback" id="feedback">
+Choose what you think is the safest action.
+</div>
+
+<button class="next primary" id="next">
+➡️ NEXT MISSION
+</button>
+
+<div class="badges" id="badges">
+</div>
+
+</div>
+
+</div>
+
 
 <script>
 
-let time=90;
-let score=0;
-let saved=0;
-let hp=100;
-let water=100;
-let fire=100;
+(() => {
 
-let started=false;
-let ended=false;
-let timer;
+const missions=[
+
+{
+title:"Smoke alarm",
+scene:"Smoke Alarm",
+
+q:"🔔 The smoke alarm is making a loud sound. What should you do?",
+
+a:[
+
+[
+"Hide under the bed",
+"wrong",
+"Hiding can make it harder for rescuers to find you."
+],
+
+[
+"Tell an adult and get outside safely",
+"safe",
+"Correct! A smoke alarm is a warning. Alert an adult and evacuate."
+],
+
+[
+"Turn off the alarm and keep playing",
+"wrong",
+"Do not ignore a fire alarm."
+]
+
+]
+
+},
+
+
+{
+title:"Smoke",
+scene:"Inside the house",
+
+q:"💨 There is smoke in the hallway. What is the safer way to move?",
+
+a:[
+
+[
+"Stand tall and run",
+"wrong",
+"Smoke can make breathing difficult and can be dangerous."
+],
+
+[
+"Stay low and move toward a safe exit",
+"safe",
+"Correct! Stay low in smoke and move toward a safe exit."
+],
+
+[
+"Hide in a closet",
+"wrong",
+"Do not hide during a fire. Get out and call for help."
+]
+
+]
+
+},
+
+
+{
+title:"Hot door",
+scene:"Bedroom",
+
+q:"🚪 You touch a closed door and it feels hot. What should you do?",
+
+a:[
+
+[
+"Open it quickly",
+"wrong",
+"A hot door may mean fire is on the other side."
+],
+
+[
+"Do not open it; use another safe exit if available",
+"safe",
+"Correct! Do not open a hot door. Find another safe way out."
+],
+
+[
+"Go back to sleep",
+"wrong",
+"A hot door is a serious warning."
+]
+
+]
+
+},
+
+
+{
+title:"Clothing fire",
+scene:"Stop • Drop • Roll",
+
+q:"🔥 Your clothes catch fire. What should you do?",
+
+a:[
+
+[
+"Run faster",
+"wrong",
+"Running can make the flames burn more strongly."
+],
+
+[
+"STOP, DROP, and ROLL",
+"safe",
+"Correct! Stop, drop to the ground, and roll to help put out the flames."
+],
+
+[
+"Hide under a blanket",
+"wrong",
+"Use Stop, Drop, and Roll and get adult help."
+]
+
+]
+
+},
+
+
+{
+title:"Elevator",
+scene:"Apartment",
+
+q:"🛗 There is a fire in the building. Which should you use to evacuate?",
+
+a:[
+
+[
+"Elevator",
+"wrong",
+"Do not use elevators during a fire unless directed by trained authorities."
+],
+
+[
+"Stairs and a safe exit",
+"safe",
+"Correct! Use the stairs and follow the evacuation route."
+],
+
+[
+"Go back inside for your toys",
+"wrong",
+"Never go back inside for belongings."
+]
+
+]
+
+},
+
+
+{
+title:"Firefighter",
+scene:"Fire scene",
+
+q:"🚒 You see a fire. You are a child. What is your job?",
+
+a:[
+
+[
+"Go inside and fight the fire",
+"wrong",
+"Children should not enter a burning building or fight the fire."
+],
+
+[
+"Get to a safe place, tell an adult, and call for emergency help",
+"safe",
+"Correct! Get out, stay out, alert an adult, and get emergency help."
+],
+
+[
+"Watch the fire from near the building",
+"wrong",
+"Stay well away from the fire and smoke."
+]
+
+]
+
+}
+
+];
+
+
+let i=0;
+
+let score=0;
+
+let answered=false;
+
 
 const $=id=>document.getElementById(id);
 
-function update(){
 
- $("time").textContent=time;
- $("score").textContent=score;
- $("saved").textContent=saved+"/3";
- $("hp").textContent=hp;
+function render(){
 
- $("fireNum").textContent=fire;
- $("waterNum").textContent=water;
+const m=missions[i];
 
- $("fireFill").style.width=fire+"%";
- $("waterFill").style.width=water+"%";
-}
+$("stage").textContent=
+`Mission ${i+1} of ${missions.length}`;
 
-function message(text){
- $("message").innerHTML=text;
-}
+$("prog").style.width=
+((i)/missions.length*100)+"%";
 
-function enableActions(value){
+$("score").textContent=score;
 
- $("alarm").disabled=!value;
- $("hose").disabled=!value;
- $("rescue").disabled=!value;
- $("ladder").disabled=!value;
+$("sceneText").textContent=m.scene;
 
-}
+$("question").textContent=m.q;
 
-function finish(success,text){
+$("feedback").textContent=
+"Choose what you think is the safest action.";
 
- ended=true;
- clearInterval(timer);
+$("next").style.display="none";
 
- enableActions(false);
- $("respond").disabled=true;
+answered=false;
 
- $("resultTitle").textContent=
- success ? "🏆 MISSION COMPLETE" : "🚨 MISSION FAILED";
+$("options").innerHTML="";
 
- $("resultText").innerHTML=
- text+
- "<br><br><b>Final Score: "+score+"</b>";
 
- $("overlay").style.display="flex";
-}
+m.a.forEach((item,n)=>{
 
-function checkMission(){
+const b=document.createElement("button");
 
- if(saved===3 && fire<=15){
+b.textContent=
+String.fromCharCode(65+n)+". "+item[0];
 
- finish(
- true,
- "All civilians are safe and the fire is under control!"
- );
+b.addEventListener("click",()=>answer(b,item));
 
- }
+$("options").appendChild(b);
 
- if(hp<=0){
+});
 
- finish(
- false,
- "The firefighter can no longer safely continue."
- );
 
- }
+$("badges").innerHTML="";
+
+
+if(i===1){
+
+$("hero").style.left="18%";
 
 }
 
-function respond(){
+if(i===2){
 
- if(started)return;
-
- started=true;
-
- $("respond").disabled=true;
- enableActions(true);
-
- score+=50;
-
- message(
- "🚒 Unit responding! Fire truck is moving to the incident..."
- );
-
- $("truck").style.left="42%";
-
- setTimeout(()=>{
-
- if(ended)return;
-
- $("fighter").style.display="block";
- $("fighter").style.left="48%";
-
- message(
- "📍 Arrived on scene! Choose your operation."
- );
-
- },1000);
-
- update();
-}
-
-function alarm(){
-
- if(ended)return;
-
- score+=25;
-
- message(
- "📢 Alarm activated! Occupants are being alerted."
- );
-
- update();
-}
-
-function hose(){
-
- if(ended)return;
-
- if(water<15){
-
- message("💧 Water supply is too low!");
-
- return;
- }
-
- water-=15;
-
- fire=Math.max(0,fire-22);
-
- score+=80;
-
- $("water").classList.add("active");
-
- setTimeout(()=>{
- $("water").classList.remove("active");
- },700);
-
- message(
- "💦 <b>Attack line deployed!</b> Fire intensity reduced."
- );
-
- update();
-
- checkMission();
-}
-
-function rescue(){
-
- if(ended)return;
-
- if(saved>=3)return;
-
- if(fire>75){
-
- message(
- "🔥 Fire is too intense! Reduce the fire first."
- );
-
- return;
- }
-
- saved++;
-
- score+=150;
-
- hp=Math.max(0,hp-5);
-
- message(
- "🛟 <b>Civilian rescued!</b> "+
- saved+" of 3 civilians are safe."
- );
-
- $("fighter").style.left=(60+saved*8)+"%";
-
- update();
-
- checkMission();
-}
-
-function ladder(){
-
- if(ended)return;
-
- if(saved>=3)return;
-
- if(water<10){
-
- message("💧 Not enough water.");
-
- return;
- }
-
- water-=10;
-
- fire=Math.max(0,fire-12);
-
- saved++;
-
- score+=180;
-
- hp=Math.max(0,hp-2);
-
- message(
- "🪜 <b>Ladder rescue successful!</b>"
- );
-
- $("fighter").style.left=(60+saved*8)+"%";
-
- update();
-
- checkMission();
-}
-
-function tick(){
-
- if(!started || ended)return;
-
- time--;
-
- if(time%5===0){
-
- fire=Math.min(100,fire+4);
-
- if(fire>85){
-
- hp=Math.max(0,hp-2);
-
- }
-
- }
-
- update();
-
- if(time<=0){
-
- finish(
- false,
- "Time ran out! The mission objectives were not completed."
- );
-
- }
+$("hero").style.left="30%";
 
 }
 
-function resetGame(){
+if(i===3){
 
- clearInterval(timer);
+$("hero").style.left="42%";
 
- time=90;
- score=0;
- saved=0;
- hp=100;
- water=100;
- fire=100;
-
- started=false;
- ended=false;
-
- $("respond").disabled=false;
-
- enableActions(false);
-
- $("overlay").style.display="none";
-
- $("truck").style.left="4%";
-
- $("fighter").style.display="none";
- $("fighter").style.left="15%";
-
- message(
- "📟 Emergency call received! Tap RESPOND."
- );
-
- update();
 }
 
-$("respond").onclick=respond;
-$("alarm").onclick=alarm;
-$("hose").onclick=hose;
-$("rescue").onclick=rescue;
-$("ladder").onclick=ladder;
-$("reset").onclick=resetGame;
-$("again").onclick=resetGame;
+if(i===4){
 
-update();
+$("hero").style.left="52%";
 
-timer=setInterval(tick,1000);
+}
+
+if(i===5){
+
+$("hero").textContent="👨‍🚒";
+
+$("hero").style.left="65%";
+
+}
+
+}
+
+
+function answer(btn,item){
+
+if(answered)return;
+
+answered=true;
+
+
+document
+.querySelectorAll("#options button")
+.forEach(x=>x.disabled=true);
+
+
+const text=item[0];
+
+const type=item[1];
+
+const explain=item[2];
+
+
+if(type==="safe"){
+
+score+=100;
+
+btn.classList.add("safe");
+
+$("feedback").innerHTML=
+"✅ <b>Tama!</b> "+explain;
+
+$("badges").innerHTML=
+'<span class="badge">🏅 SAFE CHOICE</span>';
+
+}else{
+
+score=Math.max(0,score-25);
+
+btn.classList.add("wrong");
+
+$("feedback").innerHTML=
+"⚠️ <b>Hindi ito ang safest choice.</b> "+explain;
+
+$("badges").innerHTML=
+'<span class="badge">💡 LEARN & TRY AGAIN</span>';
+
+}
+
+
+$("score").textContent=score;
+
+$("next").style.display="block";
+
+}
+
+
+function next(){
+
+if(!answered)return;
+
+
+if(i<missions.length-1){
+
+i++;
+
+render();
+
+}else{
+
+$("ovTitle").textContent=
+"🏆 JUNIOR FIRE SAFETY HERO";
+
+$("ovText").innerHTML=
+"You completed all 6 fire-safety missions!"+
+"<br><br>"+
+"<b>Score: "+score+"</b>"+
+"<br><br>"+
+"Remember: <b>Get out. Stay out. Tell an adult. Get emergency help.</b>";
+
+$("ovBtn").textContent=
+"PLAY AGAIN";
+
+$("overlay").style.display="flex";
+
+}
+
+}
+
+
+$("next").addEventListener(
+"click",
+next
+);
+
+
+$("ovBtn").addEventListener(
+"click",
+()=>{
+
+i=0;
+
+score=0;
+
+$("overlay").style.display="none";
+
+render();
+
+}
+);
+
+
+render();
+
+})();
 
 </script>
 
